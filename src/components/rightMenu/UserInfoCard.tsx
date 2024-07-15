@@ -104,7 +104,7 @@ const UserInfoCard = async ({ user }: { user: User }) => {
               <span>Joined {formattedDate}</span>
             </div>
           </div>
-          <UserInfoCardInteraction 
+          <UserInfoCardInteraction
             userId={user.id} 
             currentUserId={currentUserId} 
             isUserBlocked={isUserBlocked} 
