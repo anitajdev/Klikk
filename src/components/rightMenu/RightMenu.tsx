@@ -1,6 +1,6 @@
 import { User } from "@prisma/client"
 import Birthdays from "./Birthdays"
-import FriendRequest from "./FriendRequest"
+import FriendRequest from "./FriendRequests"
 import { Suspense } from "react"
 import Ad from "../Ad"
 import UserInfoCard from "./UserInfoCard"
