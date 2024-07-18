@@ -1,6 +1,6 @@
 import prisma from "@/lib/client";
 import { auth } from "@clerk/nextjs/server";
-import { User } from "@prisma/client"
+import { User } from "@prisma/client";
 import Image from "next/image"
 import Link from "next/link"
 import UserInfoCardInteraction from "./UserInfoCardInteraction";
@@ -59,7 +59,7 @@ const UserInfoCard = async ({ user }: { user: User }) => {
                 User Information
             </span>
             {currentUserId === user.id ? (
-              <UpdateUser />
+              <UpdateUser user={user} />
               ) : (
               <Link href="/" className="text-blue-500 text-xs">
                 See all
