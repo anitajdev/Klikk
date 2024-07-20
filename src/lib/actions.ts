@@ -95,7 +95,7 @@ export const acceptFollowRequest = async (userId: string) => {
     const { userId:currentUserId } = auth();
 
     if(!currentUserId) {
-        throw new Error("User is not Authenticated!!!");
+        throw new Error("User is not Authenticated!");
     }
 
     try {
@@ -130,7 +130,7 @@ export const declineFollowRequest = async (userId: string) => {
     const { userId:currentUserId } = auth();
 
     if(!currentUserId) {
-        throw new Error("User is not Authenticated!!!");
+        throw new Error("User is not Authenticated!");
     }
 
     try {
@@ -202,6 +202,39 @@ export const updateProfile = async (
         return { success: false, error: true };
     }
 }
+
+export const switchLike = async (postId: number) => {
+    const {userId} = auth();
+
+    if(!userId) throw new Error("User is not Authenticated!");
+
+    try {
+        const existingLike = await prisma.like.findFirst({
+            where: {
+                postId,
+                userId,
+            },
+        });
+
+        if(existingLike) {
+            await prisma.like.delete({
+                where: {
+                    id: existingLike.id
+                },
+            });
+        } else {
+            await prisma.like.create({
+                data: {
+                    postId, 
+                    userId,
+                },
+            });
+        }
+    } catch (err) {
+        console.log(err)
+        throw new Error("Something went wrong");
+    }
+};
 
 
 
