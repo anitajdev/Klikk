@@ -4,7 +4,7 @@ import { User } from "@prisma/client";
 import Image from "next/image"
 import Link from "next/link"
 import UserInfoCardInteraction from "./UserInfoCardInteraction";
-import UpdateUser from "./updateUser";
+import UpdateUser from "./UpdateUser";
 
 const UserInfoCard = async ({ user }: { user: User }) => {
 

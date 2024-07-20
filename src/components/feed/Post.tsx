@@ -1,20 +1,31 @@
 import Image from "next/image"
 import Comments from "./Comments"
+import { Post as PostType, User } from "@prisma/client"
 
-const Post = () => {
+type FeedPostType = PostType & { user: User } & {
+    likes: [ {userId: string}];
+} & {
+    _count: { comments: number };
+};
+
+const Post = ( {post }: { post: FeedPostType }) => {
   return (
     <div className="flex flex-col gap-4">
         {/* USER */}
         <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
                 <Image 
-                    src="https://images.pexels.com/photos/26611646/pexels-photo-26611646/free-photo-of-a-small-wooden-stool-with-a-cup-on-it.jpeg?auto=compress&cs=tinysrgb&w=300&lazy=load" 
+                    src={post.user.avatar || "/noAvatar.png"}
                     alt="" 
                     width={40} 
                     height={40} 
                     className="w-10 h-10 rounded-full"
                 />
-                <span className="font-medium">Maria Chase</span>
+                <span className="font-medium">
+                    {post.user.name && post.user.surname
+                     ? post.user.name + " " + post.user.surname 
+                     : post.user.surname}
+                </span>
             </div>
             <Image 
                 src="/more.png" 
@@ -25,15 +36,15 @@ const Post = () => {
         </div>
         {/* DESC */}
         <div className="flex flex-col gap-4">
-            <div className="w-full min-h-96 relative">
+            {post.img && <div className="w-full min-h-96 relative">
                 <Image 
-                    src="https://images.pexels.com/photos/25853720/pexels-photo-25853720/free-photo-of-aerial-view-of-waves-brushing-a-sandy-beach.jpeg?auto=compress&cs=tinysrgb&w=300&lazy=load" 
+                    src={post.img}
                     alt=""
                     fill
                     className="object-cover rounded-md"
                 />
-            </div>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam dolore possimus dolores aut, provident eligendi, exercitationem quasi consectetur cumque assumenda at explicabo iure ipsam adipisci laudantium neque, quia debitis accusamus!</p>
+            </div>}
+            <p>{post.desc}</p>
         </div>
         {/* INTERACTION */}
         <div className="flex items-center justify-between text-sm my-4">
@@ -71,7 +82,9 @@ const Post = () => {
                         className="cursor-pointer"
                     />
                     <span className="text-gray-300">|</span>
-                    <span className="text-gray-500">123<span className="hidden md:inline"> Shares</span></span>
+                    <span className="text-gray-500">
+                        <span className="hidden md:inline"> Share</span>
+                    </span>
                 </div>
             </div>
         </div>
